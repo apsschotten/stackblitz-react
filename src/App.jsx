@@ -10,6 +10,17 @@ export default function App() {
     evento.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, senha);
+
+      const secretKey = new TextEncoder().encode('minhaChaveSecreta');
+
+      const toker = await new SignJWT({ user: 'admin' })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('1h')
+      .sign(secretKey);
+
+      localStorage.setItem('token', token);
+      
       alert('Logado com sucesso!')
     } catch {
       alert('Erro no processo: ', err);
