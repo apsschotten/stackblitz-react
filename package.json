@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "firebase": "^11.5.0",
-    "react": "^19.0.0",
+    "express": "^5.1.0",
+    "firebase": "^11.6.0",
+    "jose": "^6.0.10",
+    "react": "^19.1.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {

@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { auth } from './config/firebaseConfig.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { SignJWT } from 'jose';
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  const navigate = useNavigate();
 
   const autenticarComFirebase = async (evento) => {
     evento.preventDefault();
@@ -13,14 +17,14 @@ export default function App() {
 
       const secretKey = new TextEncoder().encode('minhaChaveSecreta');
 
-      const toker = await new SignJWT({ user: 'admin' })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setIssuedAt()
-      .setExpirationTime('1h')
-      .sign(secretKey);
+      const token = await new SignJWT({ user: 'admin' })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime('1h')
+        .sign(secretKey);
 
       localStorage.setItem('token', token);
-      
+      navigate('/');
       alert('Logado com sucesso!')
     } catch {
       alert('Erro no processo: ', err);
@@ -44,8 +48,11 @@ export default function App() {
           type="password"
           value={senha}
           onChange={(evento) => setSenha(evento.target.value)} />
-        <button>Logar!</button>
+        <button type='submit'>Logar!</button>
       </form>
+      <Link to="/Registrar">
+        <p>Não tenho conta!</p>
+      </Link>
     </main>
   );
 }
