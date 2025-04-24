@@ -3,6 +3,7 @@ import { auth } from './config/firebaseConfig.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { SignJWT } from 'jose';
+import { Link } from 'react-router-dom';
 
 export default function App() {
   const [email, setEmail] = useState('');
